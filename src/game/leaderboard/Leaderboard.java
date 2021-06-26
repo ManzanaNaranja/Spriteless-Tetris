@@ -34,7 +34,7 @@ public class Leaderboard {
 	
 	
 	private void loadData() {
-		this.data = AEnv.readEnv("res/leaderboard.txt");
+		this.data = AEnv.readEnv("leaderboard.txt");
 	}
 	
 	public boolean update(Player candidate) {
@@ -64,7 +64,7 @@ public class Leaderboard {
 	
 	public void saveData() {
 		try {
-			FileWriter w = new FileWriter("res/leaderboard.txt");
+			FileWriter w = new FileWriter("leaderboard.txt");
 			w.write(this.toString());
 			w.close();
 		} catch (IOException e) {
