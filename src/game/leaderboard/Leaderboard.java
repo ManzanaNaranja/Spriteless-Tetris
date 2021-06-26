@@ -5,8 +5,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-import game.AEnv;
 import game.Player;
+import game.states.AEnv;
 
 public class Leaderboard {
 	private ArrayList<Player> data;
@@ -40,6 +40,7 @@ public class Leaderboard {
 	public boolean update(Player candidate) {
 		if(this.data.size() == 0) {
 			data.add(candidate);
+			this.saveData();
 			return true;
 		}
 		boolean isHighScore = this.isHighScore(candidate.getScore());

@@ -4,8 +4,13 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.util.Scanner;
 
 import ai.FurryBrain;
@@ -143,14 +148,20 @@ public class GameState extends State implements KeyListener{
 		g.setColor(Color.decode("#FF8C1A"));
 		g.fillRect(0, 0, this.game.width, this.game.height);
 		g.setColor(Color.white);
-		File f = new File("res/gameState.txt");
+		
+		InputStream is = this.getClass().getClassLoader().getResourceAsStream("gameState.txt");
+		InputStreamReader isr = null;
 		try {
-			Scanner s = new Scanner(f, "utf-8");
-			int row = 0;
-			
-			while(s.hasNextLine()) {
-
-				String text = s.nextLine();
+			isr = new InputStreamReader(is, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		BufferedReader br = new BufferedReader(isr);
+		String text;
+		int row = 0;
+		try {
+			while((text = br.readLine()) != null) {
 				int column = 0;
 				String[] data = text.split("/");
 				for(int i = 0; i < data.length; i++) {
@@ -169,10 +180,14 @@ public class GameState extends State implements KeyListener{
 				}
 				row++;
 			}
-			s.close();
-		} catch (FileNotFoundException e) {
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
 		this.setLevel();
 		this.setLines();
 		this.setScore();
