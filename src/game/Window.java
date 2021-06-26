@@ -4,8 +4,6 @@ package game;
 import java.awt.Canvas;
 import java.awt.Dimension;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 
 public class Window {
 	public JFrame frame;

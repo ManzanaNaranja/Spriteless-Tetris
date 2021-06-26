@@ -46,12 +46,4 @@ public class Cursor {
 	private int clamp(double val) {
 		return  Math.max(xMin, Math.min((int)val, xMax));
 	}
-	
-	public static void main(String[] args) {
-		Cursor c = new Cursor(1,1,0,10); 
-		c.incrementX("A");
-		c.incrementX("B");
-		
-		System.out.println(c.getText());
-	}
 }

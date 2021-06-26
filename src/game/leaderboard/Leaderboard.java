@@ -98,9 +98,4 @@ public class Leaderboard {
 		}
 		return s.substring(0,s.length()-1);
 	}
-	
-	public static void main(String[] args) {
-		Leaderboard lb = new Leaderboard();
-		System.out.println(lb);
-	}
 }

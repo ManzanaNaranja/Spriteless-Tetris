@@ -7,14 +7,11 @@ import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Scanner;
-
-import game.AEnv;
 import game.CharacterConverter;
 import game.Game;
 import game.Player;
-import game.leaderboard.Leaderboard;
+
 
 public class MenuState extends State implements KeyListener{
 	final int W = 13;
