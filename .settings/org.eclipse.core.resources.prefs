@@ -1,0 +1,9 @@
+eclipse.preferences.version=1
+encoding//res/characters=UTF-8
+encoding//res/gameState.txt=UTF-8
+encoding//res/introState.txt=UTF-8
+encoding//res/menuState.txt=UTF-8
+encoding//src/game/CharacterConverter.java=UTF-8
+encoding//src/game/StringFormatter.java=UTF-8
+encoding//src/game/states/GameState.java=UTF-8
+encoding//src/game/states/IntroState.java=UTF-8
