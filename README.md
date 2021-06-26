@@ -3,6 +3,6 @@ A java port of colinmacc's [Spriteless Tetris](https://scratch.mit.edu/projects/
 
 download the game [here](https://github.com/ManzanaNaranja/Spriteless-Tetris/raw/inputStreams/jar/tetris.jar)
 
-![game img](./tetris_game.gif)
+![gif of game](./tetris_game.gif)
 
 
