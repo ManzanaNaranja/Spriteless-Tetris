@@ -4,8 +4,13 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import game.CharacterConverter;
@@ -32,14 +37,20 @@ public class MenuState extends State implements KeyListener{
 		g.fillRect(0, 0, this.game.width, this.game.height);
 		g.setColor(Color.white);
 		records = game.leaderboard.getData();
-		File f = new File("res/menuState.txt");
+		
+		InputStream is = this.getClass().getClassLoader().getResourceAsStream("menuState.txt");
+		InputStreamReader isr = null;
 		try {
-			Scanner s = new Scanner(f, "utf-8");
-			int row = 0;
-			
-			while(s.hasNextLine()) {
-
-				String text = s.nextLine();
+			isr = new InputStreamReader(is, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		BufferedReader br = new BufferedReader(isr);
+		String text;
+		int row = 0;
+		try {
+			while((text = br.readLine()) != null) {
 				int column = 0;
 				String[] data = text.split("/");
 				for(int i = 0; i < data.length; i++) {
@@ -82,10 +93,16 @@ public class MenuState extends State implements KeyListener{
 				}
 				row++;
 			}
-			s.close();
-		} catch (FileNotFoundException e) {
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		
+	
 	}
 
 	@Override

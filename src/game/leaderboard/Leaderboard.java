@@ -5,8 +5,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-import game.AEnv;
 import game.Player;
+import game.states.AEnv;
 
 public class Leaderboard {
 	private ArrayList<Player> data;
@@ -34,12 +34,13 @@ public class Leaderboard {
 	
 	
 	private void loadData() {
-		this.data = AEnv.readEnv("res/leaderboard.txt");
+		this.data = AEnv.readEnv("leaderboard.txt");
 	}
 	
 	public boolean update(Player candidate) {
 		if(this.data.size() == 0) {
 			data.add(candidate);
+			this.saveData();
 			return true;
 		}
 		boolean isHighScore = this.isHighScore(candidate.getScore());
@@ -63,7 +64,7 @@ public class Leaderboard {
 	
 	public void saveData() {
 		try {
-			FileWriter w = new FileWriter("res/leaderboard.txt");
+			FileWriter w = new FileWriter("leaderboard.txt");
 			w.write(this.toString());
 			w.close();
 		} catch (IOException e) {

@@ -1,8 +1,14 @@
-package game;
+package game.states;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import game.Player;
 
 public class AEnv {
 	public static ArrayList<Player> readEnv(String path) {
@@ -17,8 +23,7 @@ public class AEnv {
 			}
 			s.close();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			// file will be created instead
 		}
 
 		return parsedData;
