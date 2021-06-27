@@ -35,13 +35,14 @@ public class GameState extends State implements KeyListener{
 	private int time;
 	String[][] boardData;
 	String[][] overrideBoardData;
-	private int[] speed = new int[] {350,300,250,200,175,150,125,100, 80};
+	private int[] speed = new int[] {544,493,425,374,306,225,187,119, 85};
 	private boolean over;
 	private int nextLevel;
 	private Cursor cursor;
 	private boolean isHighScore;
 	private double speedMultiplier;
 	private boolean aion;
+	private Move m;
 	TetrisEventListener t = new TetrisEventListener() {
 
 		@Override
@@ -86,6 +87,7 @@ public class GameState extends State implements KeyListener{
 		cursor = new Cursor(17,11,17,24);
 		isHighScore = false;
 		nextState = false;
+		m = null;
 	}
 
 	@Override
@@ -110,7 +112,7 @@ public class GameState extends State implements KeyListener{
 			return; 
 		}
 		
-		if(time > (int)this.speed[level-1] / this.speedMultiplier) {
+		if(time > this.speed[level-1] / this.speedMultiplier) {
 			time = 0;
 			tetris.down();
 			
@@ -118,13 +120,22 @@ public class GameState extends State implements KeyListener{
 				this.speedMultiplier = 30;
 				if(tetris.current_piece().position.y == 0){
 					FurryBrain f = new FurryBrain();
-					Move m = f.bestMove(tetris);
+					m = f.bestMove(tetris);
 					tetris.current_piece().position.y = 0;
 					if(m == null) tetris.drop();
-					else {
-						tetris.current_piece().rotation = m.getRotation();
-						tetris.current_piece().position.x = m.getX();
-						
+//					else {
+//						tetris.current_piece().rotation = m.getRotation();
+//						tetris.current_piece().position.x = m.getX();
+//						
+//					}
+				}
+				if(m != null) {
+					if(tetris.current_piece().rotation != m.getRotation()) {
+						tetris.rotate();
+					} else if(tetris.current_piece().position.x < m.getX()) {
+						tetris.right();
+					} else if(tetris.current_piece().position.x > m.getX()) {
+						tetris.left();
 					}
 				}
 			}
@@ -217,6 +228,9 @@ public class GameState extends State implements KeyListener{
 	}
 	
 	public void setInputName() {
+		this.clearOverrideData(8, 7, 3);
+		this.clearOverrideData(8, 8, 3);
+		this.clearOverrideData(8, 9, 3);		
 		alterBoardData("＋－－－－－－－－－－－－－－－－－－＋", 8, 6);
 		alterBoardData("￤囗囗囗囗囗囗囗囗囗囗囗囗囗囗囗囗囗囗￤",8,7);
 		alterBoardData("￤囗＋－－－－－－－－－－－－－－＋囗￤",8,8);
@@ -243,10 +257,15 @@ public class GameState extends State implements KeyListener{
 			this.boardData[y][x+i] = data.substring(i,i+1);
 		}
 	}
-	
 	private void alterOverrideData(String data, int x, int y) {
 		for(int i = 0; i < data.length(); i++) {
 			this.overrideBoardData[y][x+i] = data.substring(i,i+1);
+		}
+	}
+	
+	private void clearOverrideData(int x, int y, int horizAmt) {
+		for(int i = 0; i < horizAmt; i++) {
+			this.overrideBoardData[y][x+i] = null;
 		}
 	}
 	
@@ -337,10 +356,19 @@ public class GameState extends State implements KeyListener{
 			
 		}
 		
-//		if(e.getKeyChar() == '*') {
-//			this.aion = !this.aion;
-//			this.speedMultiplier = 1;
-//		}
+		if(e.getKeyChar() == '*' && this.over == false) {
+			this.aion = !this.aion;
+			this.speedMultiplier = 1;
+			if(this.aion) {
+				this.alterOverrideData("＋－－－－－－＋", 3, 7);
+				this.alterOverrideData("￤ＡＩ  ＯＮ￤", 3, 8);
+				this.alterOverrideData("＋－－－－－－＋", 3, 9);
+			}  else if(this.aion == false) {
+				this.clearOverrideData(3, 7, 8);
+				this.clearOverrideData(3, 8, 8);
+				this.clearOverrideData(3, 9, 8);		
+			}
+		}
 //		
 	}
 
